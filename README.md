@@ -4,6 +4,12 @@
 - gofiber/fiber
 - https://github.com/cosmtrek/air for live-reload
 
+Libs
+
+- https://github.com/dominikh/go-tools for more static analysis
+- use https://github.com/tarent/loginsrv if it had support for 2FA/TOTP...
+  - probably just use https://github.com/firebase/firebase-admin-go
+
 ### dev
 
 ```bash
