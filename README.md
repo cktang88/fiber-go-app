@@ -14,7 +14,9 @@ $ ./air
 
 ### go modules
 
-`go get _` to add or upgrade dependency
+To add a dep, simply include it in any source file.
+
+`go get _` to force upgrade dependency
 
 `go mod tidy` to prune deps in `go.mod`
 
@@ -26,7 +28,7 @@ $ ./air
 - use https://github.com/tarent/loginsrv if it had support for 2FA/TOTP...
   - probably just use https://github.com/firebase/firebase-admin-go
 
-### db libs
+### DB Libs
 
 there are no great ORM libs in go:
 
@@ -35,11 +37,11 @@ there are no great ORM libs in go:
 - ~~[jmoiron/sqlx](https://github.com/jmoiron/sqlx) - raw sql strings~~
 - [dbr](https://github.com/gocraft/dbr) - inspired by `sqlx` and `Squirrel`
 
-* gorm - heavy, raw sql
+* gorm - heavy, raw sql, magic struct annotation literals
 * xorm - similar to gorm
-* https://github.com/go-reform/reform - unclear docs on how to do joins/order/etc.
+* ~~https://github.com/go-reform/reform - unclear docs on how to do joins/order/etc.~~
 * upper/db - ?
 
 * on the other hand could use a code generator like https://github.com/volatiletech/sqlboiler or Prisma (go client)
 
-SQL migrations - https://github.com/rubenv/sql-migrate
+SQL migrations - https://github.com/golang-migrate/sql-migrate --> there's no "generation migration on model change" tools, but this will at least automatically run all your migration files per a file naming convention
