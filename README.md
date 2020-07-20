@@ -1,7 +1,7 @@
 # fiber-go-app
 
-- go modules
-- [gofiber/fiber](https://github.com/gofiber/fiber)l
+- [go modules](https://blog.golang.org/migrating-to-go-modules) (stable since v1.14)
+- [gofiber/fiber](https://github.com/gofiber/fiber)
 - https://github.com/cosmtrek/air for live-reload
 
 ### Libs
@@ -20,9 +20,7 @@ $ ./air
 
 ### go modules
 
-`go get _` to add new dependency
-
-`go list -mod=mod -m -u all` to upgrade deps
+`go get _` to add or upgrade dependency
 
 `go mod tidy` to prune deps in `go.mod`
 
