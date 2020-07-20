@@ -5,14 +5,30 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	dbr "github.com/gocraft/dbr/v2"
 	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
 	"github.com/gofiber/limiter"
+	_ "github.com/mattn/go-sqlite3"
 
 	jwtware "github.com/gofiber/jwt"
 )
 
 func main() {
+
+	// create a connection (e.g. "postgres", "mysql", or "sqlite3")
+	conn, err := dbr.Open("sqlite3", "./test.sqlite", nil)
+	if err != nil {
+		fmt.Println("Error connecting: ", err)
+	}
+	conn.SetMaxOpenConns(10)
+
+	// create a session for each business unit of execution (e.g. a web request or goworkers job)
+	sess := conn.NewSession(nil)
+
+	// create a tx from sessions
+	sess.Begin()
+
 	app := fiber.New()
 
 	app.Use(cors.New())
