@@ -7,6 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
+	"github.com/gofiber/limiter"
 
 	jwtware "github.com/gofiber/jwt"
 )
@@ -16,6 +17,14 @@ func main() {
 
 	app.Use(cors.New())
 	fmt.Printf("Using cors.")
+
+	// 3 requests per 10 seconds max
+	cfg := limiter.Config{
+		Timeout: 10,
+		Max:     3,
+	}
+
+	app.Use(limiter.New(cfg))
 
 	// Match any route
 	app.Use(func(c *fiber.Ctx) {
