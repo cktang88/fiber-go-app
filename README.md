@@ -4,6 +4,8 @@
 - [gofiber/fiber](https://github.com/gofiber/fiber)
 - https://github.com/cosmtrek/air for live-reload
 
+**TODO: look at https://github.com/gofiber/recipes for examples**
+
 ### Dev
 
 ```bash
