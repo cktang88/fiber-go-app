@@ -18,7 +18,7 @@ $ ./air
 
 To add a dep, simply include it in any source file.
 
-`go get _` to force upgrade dependency
+`go get <dep-name>` to force upgrade dependency
 
 `go mod -v all` to update all deps
 

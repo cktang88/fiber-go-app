@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
+	github.com/RediSearch/redisearch-go v1.0.1
 	github.com/cosmtrek/air v1.21.2
 	github.com/creack/pty v1.1.11 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -13,6 +14,7 @@ require (
 	github.com/gofiber/fiber v1.14.4
 	github.com/gofiber/jwt v0.2.0
 	github.com/gofiber/limiter v0.1.2
+	github.com/gomodule/redigo v1.8.2 // indirect
 	github.com/gorilla/schema v1.2.0 // indirect
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/klauspost/compress v1.10.11 // indirect
