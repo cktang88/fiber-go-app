@@ -20,6 +20,8 @@ To add a dep, simply include it in any source file.
 
 `go get _` to force upgrade dependency
 
+`go mod -v all` to update all deps
+
 `go mod tidy` to prune deps in `go.mod`
 
 `go mod vendor` copy installed deps to `/vendor`
@@ -31,6 +33,8 @@ To add a dep, simply include it in any source file.
   - probably just use https://github.com/firebase/firebase-admin-go
 
 ### DB Libs
+
+- **[ent](https://github.com/facebook/ent) - seems promising...**
 
 there are no great ORM libs in go:
 
