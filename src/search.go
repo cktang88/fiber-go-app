@@ -9,10 +9,13 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// global redis client
+var redisClient *redisearch.Client
+
 func redisInit() {
 	// Create a client. By default a client is schemaless
 	// unless a schema is provided when creating the index
-	c := redisearch.NewClient("localhost:6379", "myIndex")
+	redisClient = redisearch.NewClient("localhost:6379", "myIndex")
 
 	// Create a schema
 	sc := redisearch.NewSchema(redisearch.DefaultOptions).
@@ -24,12 +27,12 @@ func redisInit() {
 	// c.Drop()
 
 	// Create the index with the given schema
-	if err := c.CreateIndex(sc); err != nil {
+	if err := redisClient.CreateIndex(sc); err != nil {
 		log.Fatal(err)
 	}
 	// Create a document with an id and given score
-	addText(c, "doc1", "Hello world", "foo bar", 1.0)
-	addText(c, "doc2", "goodbye world", "asdf random body", 0.8)
+	addText(redisClient, "doc1", "Hello world", "foo bar", 1.0)
+	addText(redisClient, "doc2", "goodbye world", "asdf random body", 0.8)
 }
 
 func addText(c *redisearch.Client, id string, title string, body string, score float32) {

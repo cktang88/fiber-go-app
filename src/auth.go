@@ -4,17 +4,16 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
-func login(c *fiber.Ctx) {
+func login(c *fiber.Ctx) error {
 	user := c.FormValue("user")
 	pass := c.FormValue("pass")
 
 	// Throws Unauthorized error
 	if user != "john" || pass != "doe" {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return
+		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
 	// Create token
@@ -29,9 +28,8 @@ func login(c *fiber.Ctx) {
 	// Generate encoded token and send it as response.
 	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
-		c.SendStatus(fiber.StatusInternalServerError)
-		return
+		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	c.JSON(fiber.Map{"token": t})
+	return c.JSON(fiber.Map{"token": t})
 }

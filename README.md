@@ -12,6 +12,9 @@
 # to start hot reloading server
 $ chmod +x air
 $ ./air
+
+# starting redisearch
+$ docker run -p 6379:6379 redislabs/redisearch:latest
 ```
 
 ### go modules
@@ -34,8 +37,6 @@ To add a dep, simply include it in any source file.
 
 ### DB Libs
 
-- **[ent](https://github.com/facebook/ent) - seems promising...**
-
 there are no great ORM libs in go:
 
 > ORM requires a very framework oriented development style, which Go is not particularly geared toward lacking both generics and dynamic class loader. It doesn't fit particularly well with Go's focus on simplicity and performance, either. - https://www.reddit.com/r/golang/comments/b9h8xo/the_state_of_orms_in_2019/
@@ -47,6 +48,8 @@ there are no great ORM libs in go:
 * xorm - similar to gorm
 * ~~https://github.com/go-reform/reform - unclear docs on how to do joins/order/etc.~~
 * upper/db - ?
+
+- [facebook/ent](https://github.com/facebook/ent) - seems promising...
 
 * on the other hand could use a code generator like https://github.com/volatiletech/sqlboiler or Prisma (go client)
 

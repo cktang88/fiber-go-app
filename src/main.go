@@ -2,31 +2,22 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	dbr "github.com/gocraft/dbr/v2"
-	"github.com/gofiber/cors"
-	"github.com/gofiber/fiber"
-	"github.com/gofiber/limiter"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	_ "github.com/mattn/go-sqlite3"
 
-	jwtware "github.com/gofiber/jwt"
+	jwtware "github.com/gofiber/jwt/v2"
 )
 
 func main() {
 
-	// create a connection (e.g. "postgres", "mysql", or "sqlite3")
-	conn, err := dbr.Open("sqlite3", "./test.sqlite", nil)
-	if err != nil {
-		fmt.Println("Error connecting: ", err)
-	}
-	conn.SetMaxOpenConns(10)
-
-	// create a session for each business unit of execution (e.g. a web request or goworkers job)
-	sess := conn.NewSession(nil)
-
-	// create a tx from sessions
-	sess.Begin()
+	// initialize resources
+	dbInit()
+	go redisInit()
 
 	app := fiber.New()
 
@@ -35,28 +26,28 @@ func main() {
 
 	// 3 requests per 10 seconds max
 	cfg := limiter.Config{
-		Timeout: 10,
-		Max:     3,
+		Duration: 10 * time.Second,
+		Max:      3,
 	}
 
 	app.Use(limiter.New(cfg))
 
 	// Match any route
-	app.Use(func(c *fiber.Ctx) {
+	app.Use(func(c *fiber.Ctx) error {
 		fmt.Println("🥇 First handler")
-		c.Next()
+		return c.Next()
 	})
 
 	// Match all routes starting with /api
-	app.Use("/api", func(c *fiber.Ctx) {
+	app.Use("/api", func(c *fiber.Ctx) error {
 		fmt.Println("🥈 Second handler")
-		c.Next()
+		return c.Next()
 	})
 
 	// GET /api/register
-	app.Get("/api/list", func(c *fiber.Ctx) {
+	app.Get("/api/list", func(c *fiber.Ctx) error {
 		fmt.Println("🥉 Last handler")
-		c.Send("Hello, World 👋!")
+		return c.Send([]byte("Hello, World 👋!"))
 	})
 
 	// Login route
@@ -73,16 +64,16 @@ func main() {
 	// Restricted Routes
 	app.Get("/restricted", restricted)
 
-	app.Listen(3000)
+	app.Listen(":3000")
 }
 
-func accessible(c *fiber.Ctx) {
-	c.Send("Accessible")
+func accessible(c *fiber.Ctx) error {
+	return c.Send([]byte("Accessible"))
 }
 
-func restricted(c *fiber.Ctx) {
+func restricted(c *fiber.Ctx) error {
 	user := c.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 	name := claims["name"].(string)
-	c.Send("Welcome " + name)
+	return c.Send([]byte("Welcome " + name))
 }
